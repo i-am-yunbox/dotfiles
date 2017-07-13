@@ -1,0 +1,77 @@
+conky.config = {
+    alignment = 'top_left',
+    background = yes,
+    own_window = true,
+    own_window_type = 'override',
+    own_window_class = 'Conky',
+    own_window_colour = 'black',
+    own_window_transparent = yes,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_argb_visual = true,
+    own_window_argb_value = 100,
+    update_interval = 2,
+    use_xft = true,
+    font = 'Hack:style=Bold:size=10',
+    gap_x = 20,
+    gap_y = 40,
+    double_buffer = true,
+    uppercase = false,
+    maximum_width = 350,
+    draw_shades = false,
+    draw_outline = false,
+    draw_graph_borders = true,
+};
+
+conky.text = [[
+${color #d64937}SYSTEM $hr${color}
+${color #d8d8d8}KERNEL:${color}${alignr} $sysname $kernel $machine
+${color #d8d8d8}UPTIME:${color} ${alignr} $uptime
+${color #d8d8d8}LOAD AVERAGE:${color} ${alignr} ${loadavg 1 2 3}
+--# ${color #d8d8d8}VOLUME:${color} ${alignr}${execi 1 ~/.i3/i3blocks/volume.sh}
+
+${color #d64937}CPU USAGE $hr${color}
+${color #d8d8d8}CPU1:${color} ${cpubar cpu1 5,200} ${cpu cpu1}% ${alignr}${freq_g 0}GHz
+${color #d8d8d8}CPU2:${color} ${cpubar cpu2 5,200} ${cpu cpu2}% ${alignr}${freq_g 1}GHz
+${color #d8d8d8}CPU3:${color} ${cpubar cpu3 5,200} ${cpu cpu3}% ${alignr}${freq_g 2}GHz
+${color #d8d8d8}CPU4:${color} ${cpubar cpu4 5,200} ${cpu cpu4}% ${alignr}${freq_g 3}GHz
+
+${color #d64937}RAM USAGE $hr${color}
+${color #d8d8d8}RAM:${color}  ${membar 5,200} ${memperc}% ${alignr}${mem}
+
+${color #d64937}SSD USAGE $hr${color}
+${color #d8d8d8}SSD:${color} ${fs_bar 5,200 /} ${fs_free_perc /}%${alignr}${fs_free /}
+${color #d8d8d8}READ:${color} ${alignr}${diskio_read /dev/sda}
+${alignc}${diskiograph_read /dev/sda 15,330}
+${color #d8d8d8}WRITE:${color} ${alignr}${diskio_write /dev/sda}
+${alignc}${diskiograph_write /dev/sda 15,330}
+
+${color #d64937}SYSTEM LOAD $hr${color}
+${color #d8d8d8}PROCESSES:${color} ${alignr} ${processes} (RUNNING: ${running_processes})
+${color #e6e6e6}TOP PROCESSES(name/pid/cpu/mem/time) $hr${color}
+${top name 1} ${alignr} ${top pid 1}${top cpu 1}%${top mem 1}%${top time 1}
+${top name 2} ${alignr} ${top pid 2}${top cpu 2}%${top mem 2}%${top time 2}
+${top name 3} ${alignr} ${top pid 3}${top cpu 3}%${top mem 3}%${top time 3}
+${top name 4} ${alignr} ${top pid 4}${top cpu 4}%${top mem 4}%${top time 4}
+${top name 5} ${alignr} ${top pid 5}${top cpu 5}%${top mem 5}%${top time 5}
+${top name 6} ${alignr} ${top pid 6}${top cpu 6}%${top mem 6}%${top time 6}
+${top name 7} ${alignr} ${top pid 7}${top cpu 7}%${top mem 7}%${top time 7}
+${alignc}${loadgraph 40,350}
+
+${color #d64937}NETWORK $hr${color}
+${color #e6e6e6}Wi-Fi $hr${color}
+${if_up wifi1}${color #d8d8d8}Address:${color} ${alignr}${if_up wifi1}${addr wifi1}${else}N/A${endif}
+${color #d8d8d8}Mode:${color} ${alignr} ${if_up wifi1}${wireless_mode wifi1}${else}N/A${endif}
+${color #d8d8d8}ESSID:${color} ${alignr} ${if_up wifi1}${wireless_essid wifi1}${else}N/A${endif}
+${color #d8d8d8}BSSID:${color} ${alignr} ${if_up wifi1}${wireless_ap wifi1}${else}N/A${endif}
+#${color #d8d8d8}${if_up wifi1}Quality:${color}${alignr} ${wireless_link_qual_perc wifi1}%${else}${color #d8d8d8}Quality:${color}${alignr} N/A${endif}
+#${if_up wifi1}${alignc}${wireless_link_bar 10,420 wifi1}${else}${alignr}N/A${endif}
+${color #d8d8d8}UplinkSpeed:${color} ${alignr} ${upspeedf wifi1}KB
+${color #d8d8d8}DownlinkSpeed:${color} ${alignr} ${downspeedf wifi1}KB
+${else}${color #d8d8d8}ADDRES:${color} ${alignr}${if_up wlp1s0}${addr wlp1s0}${else}N/A${endif}
+${color #d8d8d8}ESSID:${color} ${alignr} ${if_up wlp1s0}${wireless_essid wlp1s0}${else}NO CONNECTION${endif}
+${color #d8d8d8}BSSID:${color} ${alignr} ${if_up wlp1s0}${wireless_ap wlp3s0}${else}NO CONNECTION${endif}
+#${color #d8d8d8}${if_up wlp1s0}Quality:${color}${alignr} ${wireless_link_qual_perc wlp1s0}%${else}${color #d8d8d8}Quality:${color}${alignr} NO CONNECTION${endif}
+#${if_up wlp3s0}${alignc}${wireless_link_bar 10,420 wlp3s0}${else}${alignr}N/A$
+${color #d8d8d8}UplinkSpeed:${color} ${alignr} ${upspeedf wlp1s0}KB
+${color #d8d8d8}DownlinkSpeed:${color} ${alignr} ${downspeedf wlp1s0}KB${endif}
+]];

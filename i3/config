@@ -1,0 +1,150 @@
+## i3wm config file for yunbox
+
+## keybinding
+set $mod Mod4
+
+## font for window titles
+font pango:Ubuntu Bold 10
+
+## New tiling windows with title bar and borders
+new_window normal 0
+
+## New floating windows with title bar and borders
+new_float normal 0
+
+## start a terminal
+bindsym $mod+Return exec urxvt
+
+## kill focused window
+bindsym $mod+q kill
+
+## start rofi
+bindsym $mod+d exec rofi -show combi -terminal urxvt -sidebar-mode -lines 7 -font "Hack Bold 15" 
+
+## change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+## move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+## change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+## change focus between tiling / floating windows
+bindsym $mod+space floating toggle
+bindsym $mod+Shift+space focus mode_toggle
+
+## focus the parent container
+bindsym $mod+a focus parent
+
+## split in orientation
+bindsym $mod+Control+h split h
+bindsym $mod+Control+v split v
+bindsym $mod+Control+q split toggle
+
+## enter full screen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+## switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+## move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+## resize window (you can also use the mouse for that)
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+Shift+p mode "resize"
+
+## exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'Do you really want to exit i3?' -b 'Shutdown' 'systemctl poweroff' -b 'Reboot' 'systemctl reboot' -b 'Logout' 'i3-msg exit'"
+
+## window floating and layout
+for_window [class="Nitrogen"] floating enable
+for_window [class="alarm-clock-applet"] floating enable
+for_window [class="urxvt"] floating enable
+
+## Numix color scheme
+client.focused #d64937 #d64937 #dedede
+client.unfocused #333333 #333333 #dedede
+client.focused_inactive #333333 #333333 #dedede
+client.urgent #383a3b #383a3b #ee0000
+
+bar {
+    status_command i3blocks -c ~/.config/i3/i3blocks/i3blocks.conf
+    mode dock
+    position top
+    workspace_buttons yes
+    font pango:Ubuntu Bold 10
+    tray_padding 1
+
+    ## Numix color scheme
+    colors {
+        background #2d2d2d
+        statusline #dedede
+        separator #2d2d2d
+        focused_workspace  #d64937 #d64937 #dedede
+        active_workspace   #2d2d2d #5f676a #dedede
+        inactive_workspace #2d2d2d #2d2d2d #888888
+        urgent_workspace   #333333 #900000 #ffffff
+    }
+}
+
+## i3 gaps
+gaps inner 10
+gaps outer -5
+smart_gaps on
+
+## stertups
+#exec --no-startup-id xfce4-panel --disable-wm-check
+exec --no-startup-id nm-applet
+exec --no-startup-id dunst
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id compton --config ~/.config/compton/compton.conf
+exec --no-startup-id xset b 0
+exec --no-startup-id fcitx
+exec --no-startup-id conky --config ~/.config/conky/yunckyrc
+exec --no-startup-id volumeicon
